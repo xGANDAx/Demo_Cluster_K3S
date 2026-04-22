@@ -1,0 +1,18 @@
+- hosts: rpi
+  become: yes
+  vars_files:
+    - secrets.yml
+  roles:
+    - common
+    - k3s
+    - github_runner
+    - node_exporter
+
+- hosts: rpi
+  become: yes
+  vars_files:
+    - secrets.yml
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python3
+  roles:
+    - k8s_deploy

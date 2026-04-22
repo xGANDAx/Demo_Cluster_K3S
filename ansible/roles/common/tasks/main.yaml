@@ -1,0 +1,29 @@
+- name: Update apt
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install dependencies
+  apt:
+    name:
+      - curl
+      - git
+      - unzip
+    state: present
+- name: Install python venv deps
+  apt:
+    name:
+      - python3-venv
+      - python3-pip
+    state: present
+    update_cache: yes
+
+- name: Create virtualenv
+  command: python3 -m venv /opt/ansible-venv
+  args:
+    creates: /opt/ansible-venv
+
+- name: Install kubernetes in venv
+  pip:
+    name: kubernetes
+    virtualenv: /opt/ansible-venv

@@ -1,0 +1,11 @@
+- name: Create namespace
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'namespace.yaml') }}"
+    kubeconfig: /home/pi/.kube/config
+
+- name: Apply cloudflared deployment
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'cloudflared.yaml') }}"
+    kubeconfig: /home/pi/.kube/config

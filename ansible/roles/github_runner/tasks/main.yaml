@@ -1,0 +1,48 @@
+- name: Create runner directory
+  file:
+    path: /home/pi/actions-runner
+    state: directory
+    owner: pi
+
+- name: Download runner
+  get_url:
+    url: https://github.com/actions/runner/releases/download/v2.333.1/actions-runner-linux-arm64-2.333.1.tar.gz
+    dest: /home/pi/actions-runner/runner.tar.gz
+
+- name: Extract runner
+  unarchive:
+    src: /home/pi/actions-runner/runner.tar.gz
+    dest: /home/pi/actions-runner
+    remote_src: yes
+
+- name: Fix permissions for runner directory
+  file:
+    path: /home/pi/actions-runner
+    owner: pi
+    group: pi
+    recurse: yes
+
+- name: Configure runner
+  become: yes
+  become_user: pi
+  shell: |
+    ./config.sh --url https://github.com/xGANDAx/Demo_Backstage --token {{ github_token }} --unattended
+  args:
+    chdir: /home/pi/actions-runner
+    creates: /home/pi/actions-runner/.runner
+
+- name: Check if runner service exists
+  stat:
+    path: /etc/systemd/system/actions.runner.xGANDAx-Demo_Backstage.raspberrypi.service
+  register: runner_service
+
+- name: Install service
+  shell: ./svc.sh install
+  args:
+    chdir: /home/pi/actions-runner
+  when: not runner_service.stat.exists
+
+- name: Start service
+  shell: ./svc.sh start
+  args:
+    chdir: /home/pi/actions-runner
