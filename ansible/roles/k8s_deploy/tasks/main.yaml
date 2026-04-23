@@ -4,6 +4,13 @@
     definition: "{{ lookup('template', 'namespace.yaml') }}"
     kubeconfig: /home/pi/.kube/config
 
+- name: Apply secret deployment
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'secret.yaml') }}"
+    kubeconfig: /home/pi/.kube/config
+
+
 - name: Apply cloudflared deployment
   kubernetes.core.k8s:
     state: present
