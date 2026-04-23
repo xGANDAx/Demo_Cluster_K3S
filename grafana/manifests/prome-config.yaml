@@ -15,4 +15,4 @@ data:
 
       - job_name: 'raspberry-pi'
         static_configs:
-          - targets: ['pi.local:9100']
+          - targets: ['raspberrypi.local:9100']
