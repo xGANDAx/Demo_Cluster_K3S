@@ -21,4 +21,7 @@ spec:
             - run
           env:
             - name: TUNNEL_TOKEN
-              value: "{{ tunnel_token }}"
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflared-secret
+                  key: TUNNEL_TOKEN
