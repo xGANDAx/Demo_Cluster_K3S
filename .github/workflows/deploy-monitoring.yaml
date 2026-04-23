@@ -13,7 +13,7 @@ jobs:
 
       - name: Deploy namespace
         run: |
-          kubectl apply -f postgress/namespace.yaml
+          kubectl apply -f grafana/namespace.yaml
 
       - name: Deploy Secrets
         env:
