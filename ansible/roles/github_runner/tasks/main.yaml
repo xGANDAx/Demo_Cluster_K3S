@@ -26,7 +26,7 @@
   become: yes
   become_user: pi
   shell: |
-    ./config.sh --url https://github.com/xGANDAx/Demo_Backstage --token {{ github_token }} --unattended
+    ./config.sh --url https://github.com/Demo-xGANDAx-org --token {{ github_token }} --unattended
   args:
     chdir: /home/pi/actions-runner
     creates: /home/pi/actions-runner/.runner
