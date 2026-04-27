@@ -37,17 +37,17 @@ spec:
               value: postgres.backstage.svc.cluster.local
             - name: DB_POSTGRESDB_PORT
               value: "5432"
-            - name: POSTGRES_USER
+            - name: DB_POSTGRESDB_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
+            - name: DB_POSTGRESDB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
+            - name: DB_POSTGRESDB_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
