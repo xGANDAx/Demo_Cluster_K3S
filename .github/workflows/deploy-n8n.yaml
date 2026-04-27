@@ -1,0 +1,35 @@
+name: Deploy N8N
+
+on:
+  workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Deploy namespace
+        run: |
+          kubectl apply -f n8n/manifests/namespace.yaml
+
+      - name: Deploy Secrets
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        run: |
+          chmod +x n8n/secrets.sh
+          ./n8n/secrets.sh
+
+      - name: Deploy Components
+        run: |
+          chmod +x n8n/deploy.sh
+          cd n8n
+          ./deploy.sh
+
+      - name: Verify deployment
+        run: |
+          kubectl get pods -n backstage
