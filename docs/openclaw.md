@@ -1,4 +1,4 @@
-# OpenClaw: Introducción 📌
+# Open Claw
 
 OpenClaw es una plataforma de automatización y asistencia basada en agentes, desplegable en entornos Kubernetes. Su objetivo es convertir entradas (p. ej., mensajes, eventos o comandos) en respuestas útiles y accionables, apoyándose en modelos de IA y en integraciones del ecosistema.
 
@@ -10,7 +10,7 @@ En un despliegue típico, OpenClaw corre como un conjunto de **servicios** que e
 
 ---
 
-# Arquitectura en Raspberry Pi 🧩 (Kubernetes)
+## Arquitectura en Raspberry Pi 🧩 (Kubernetes)
 
 En nuestra Raspberry Pi, OpenClaw se ejecuta dentro de un **cluster Kubernetes** como un conjunto de recursos orquestados. En este contexto, los componentes principales se agrupan en entidades como **Pods** y/o **Servicios**, donde:
 
@@ -37,7 +37,7 @@ Actualmente, el despliegue incluye un servicio que:
 
 ---
 
-# Uso actual del agente ✅
+## Uso actual del agente ✅
 
 El agente desplegado actualmente está orientado a:
 - **resolver preguntas** sobre el ecosistema OpenClaw,
@@ -46,7 +46,7 @@ El agente desplegado actualmente está orientado a:
 
 ---
 
-# Mejoras a futuro 🚀
+## Mejoras a futuro 🚀
 
 El despliegue actual ya permite asistencia por chat (Telegram) y generación de documentación mediante agentes. A continuación, algunas mejoras planificadas para extender capacidades de automatización y observabilidad dentro del cluster Kubernetes:
 
