@@ -29,8 +29,7 @@ jobs:
           TLS_CERT: ${{ secrets.TLS_CERT_N8N }}
           TLS_KEY: ${{ secrets.TLS_KEY_N8N }}
         run: |
-          chmod +x openclaw/cert.sh
-          ./openclaw/cert.sh --create-secret
+          chmod +x n8n/cert.sh
 
       - name: Deploy Components
         run: |
