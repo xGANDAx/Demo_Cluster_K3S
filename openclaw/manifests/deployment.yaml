@@ -101,6 +101,12 @@ spec:
                 secretKeyRef:
                   name: openclaw-secrets
                   key: TELEGRAM_BOT_TOKEN
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: openclaw-secrets
+                  key: GITHUB_TOKEN
+                  optional: true
           resources:
             requests:
               memory: 512Mi

@@ -18,6 +18,7 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENCLAW_GATEWAY_TOKEN: ${{ secrets.OPENCLAW_GATEWAY_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
         run: |
           chmod +x openclaw/deploy.sh

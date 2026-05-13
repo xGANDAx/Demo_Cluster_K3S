@@ -91,6 +91,7 @@ _apply_secret() {
   local GEMINI_VALUE=""
   local OPENROUTER_VALUE=""
   local TELEGRAM_BOT_VALUE=""
+  local GITHUB_VALUE=""
   local TOKEN
   local SECRET_MANIFEST
   TMP_DIR="$(mktemp -d)"
@@ -105,6 +106,7 @@ _apply_secret() {
     GEMINI_VALUE="$(kubectl get secret openclaw-secrets -n "$NS" -o jsonpath='{.data.GEMINI_API_KEY}' 2>/dev/null | base64 -d)"
     OPENROUTER_VALUE="$(kubectl get secret openclaw-secrets -n "$NS" -o jsonpath='{.data.OPENROUTER_API_KEY}' 2>/dev/null | base64 -d)"
     TELEGRAM_BOT_VALUE="$(kubectl get secret openclaw-secrets -n "$NS" -o jsonpath='{.data.TELEGRAM_BOT_TOKEN}' 2>/dev/null | base64 -d)"
+    GITHUB_VALUE="$(kubectl get secret openclaw-secrets -n "$NS" -o jsonpath='{.data.GITHUB_TOKEN}' 2>/dev/null | base64 -d)"
   fi
 
   TOKEN="${EXISTING_TOKEN:-$(openssl rand -hex 32)}"
@@ -113,6 +115,7 @@ _apply_secret() {
   GEMINI_VALUE="${GEMINI_API_KEY:-$GEMINI_VALUE}"
   OPENROUTER_VALUE="${OPENROUTER_API_KEY:-$OPENROUTER_VALUE}"
   TELEGRAM_BOT_VALUE="${TELEGRAM_BOT_TOKEN:-$TELEGRAM_BOT_VALUE}"
+  GITHUB_VALUE="${GITHUB_TOKEN:-$GITHUB_VALUE}"
   SECRET_MANIFEST="$TMP_DIR/secrets.yaml"
 
   # Write secret material to temp files so kubectl handles encoding safely.
@@ -122,13 +125,15 @@ _apply_secret() {
   printf '%s' "$GEMINI_VALUE" > "$TMP_DIR/GEMINI_API_KEY"
   printf '%s' "$OPENROUTER_VALUE" > "$TMP_DIR/OPENROUTER_API_KEY"
   printf '%s' "$TELEGRAM_BOT_VALUE" > "$TMP_DIR/TELEGRAM_BOT_TOKEN"
+  printf '%s' "$GITHUB_VALUE" > "$TMP_DIR/GITHUB_TOKEN"
   chmod 600 \
     "$TMP_DIR/OPENCLAW_GATEWAY_TOKEN" \
     "$TMP_DIR/ANTHROPIC_API_KEY" \
     "$TMP_DIR/OPENAI_API_KEY" \
     "$TMP_DIR/GEMINI_API_KEY" \
     "$TMP_DIR/OPENROUTER_API_KEY" \
-    "$TMP_DIR/TELEGRAM_BOT_TOKEN"
+    "$TMP_DIR/TELEGRAM_BOT_TOKEN" \
+    "$TMP_DIR/GITHUB_TOKEN"
 
   kubectl create secret generic openclaw-secrets \
     -n "$NS" \
@@ -138,6 +143,7 @@ _apply_secret() {
     --from-file=GEMINI_API_KEY="$TMP_DIR/GEMINI_API_KEY" \
     --from-file=OPENROUTER_API_KEY="$TMP_DIR/OPENROUTER_API_KEY" \
     --from-file=TELEGRAM_BOT_TOKEN="$TMP_DIR/TELEGRAM_BOT_TOKEN" \
+    --from-file=GITHUB_TOKEN="$TMP_DIR/GITHUB_TOKEN" \
     --dry-run=client \
     -o yaml > "$SECRET_MANIFEST"
   chmod 600 "$SECRET_MANIFEST"

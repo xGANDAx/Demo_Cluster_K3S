@@ -6,7 +6,7 @@ metadata:
   
 spec:
   rules:
-    - host: grafana.xgandax.xyz
+    - host: grafana.xgandax.cloud
       http:
         paths:
           - path: /
